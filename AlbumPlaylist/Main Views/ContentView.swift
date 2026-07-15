@@ -31,13 +31,18 @@ struct ContentView: View {
         NavigationStack {
 
             ScrollView {
+                
+                
                 LazyVGrid(columns: columns) {
                     ForEach(albums, id: \.id) { album in
-                        CardView(album: album)
+                        NavigationLink(value: album){
+                            CardView(album: album)
+                        }
                     }
                 }
             }
             .padding(.horizontal)
+            .navigationDestination(for: Album.self, destination: {album in DetailView(album: album, albumStore: albumStore)})
             .navigationTitle("Muznah's Albums")
             .searchable(text: $searchText, prompt: "Search for an album or artist")
             .onSubmit(of: .search) {

@@ -9,16 +9,18 @@ import SwiftUI
 
 @main
 struct AlbumPlaylistApp: App {
-
+    @State private var albumStore: AlbumStore = AlbumStore(albums: [])
     var body: some Scene {
         WindowGroup {
             TabView {
                 Tab("Album Search", systemImage: "magnifyingglass") {
-                    ContentView()
+                    ContentView(albumStore: albumStore)
                 }
                 Tab("Playlist", systemImage: "music.note.list") {
-                    PlaylistView()
+                    PlaylistView(albumStore: albumStore)
                 }
+            }.onAppear() {
+                albumStore.retrieveAlbums()
             }
         }
     }

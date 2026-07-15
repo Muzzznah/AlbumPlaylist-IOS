@@ -14,6 +14,8 @@ struct ContentView: View {
     // The text typed into the search bar.
     @State private var searchText = ""
     
+    var albumStore: AlbumStore
+    
     // Three flexible columns for the album grid
         var columns: [GridItem] {
             [
@@ -78,5 +80,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView(albumStore: AlbumStore.exampleAlbumStore)
 }

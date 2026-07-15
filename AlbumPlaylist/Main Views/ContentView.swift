@@ -13,17 +13,29 @@ struct ContentView: View {
 
     // The text typed into the search bar.
     @State private var searchText = ""
+    
+    // Three flexible columns for the album grid
+        var columns: [GridItem] {
+            [
+                GridItem(.flexible()),
+                GridItem(.flexible()),
+                GridItem(.flexible())
+            ]
+        }
 
     var body: some View {
         
         // Enable Navigation
         NavigationStack {
 
-            List {
-                ForEach(albums, id: \.id) { album in
-                    Text(album.collectionName)
+            ScrollView {
+                LazyVGrid(columns: columns) {
+                    ForEach(albums, id: \.id) { album in
+                        CardView(album: album)
+                    }
                 }
             }
+            .padding(.horizontal)
             .navigationTitle("Muznah's Albums")
             .searchable(text: $searchText, prompt: "Search for an album or artist")
             .onSubmit(of: .search) {

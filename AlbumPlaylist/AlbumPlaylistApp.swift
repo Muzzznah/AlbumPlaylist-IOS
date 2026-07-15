@@ -9,9 +9,17 @@ import SwiftUI
 
 @main
 struct AlbumPlaylistApp: App {
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TabView {
+                Tab("Album Search", systemImage: "magnifyingglass") {
+                    ContentView()
+                }
+                Tab("Playlist", systemImage: "music.note.list") {
+                    PlaylistView()
+                }
+            }
         }
     }
 }

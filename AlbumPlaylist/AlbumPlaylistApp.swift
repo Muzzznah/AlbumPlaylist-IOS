@@ -18,7 +18,7 @@ struct AlbumPlaylistApp: App {
                 }
                 Tab("Playlist", systemImage: "music.note.list") {
                     PlaylistView(albumStore: albumStore)
-                }
+                }.badge(albumStore.albums.count)
             }.onAppear() {
                 albumStore.retrieveAlbums()
             }

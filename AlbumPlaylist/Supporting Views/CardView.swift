@@ -14,7 +14,7 @@ struct CardView: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 5)
-                .fill(.teal)
+                .fill(.card)
 
             VStack {
                 // The artwork url is optional - show a placeholder if it is missing

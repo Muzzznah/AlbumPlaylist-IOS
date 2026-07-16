@@ -9,8 +9,12 @@ import Foundation
 import SwiftUI
 
 struct DetailView: View {
+
     let album: Album
     var albumStore: AlbumStore
+
+    // Controls whether the add/remove alert is showing.
+    @State private var alertIsShowing = false
 
     var body: some View {
         ScrollView {
@@ -70,10 +74,41 @@ struct DetailView: View {
                         WebView(webText: url)
                     }
                 }
+
+                // Button that asks to add or remove the album via an alert.
+                Button(albumStore.isInPlaylist(album: album) ? "Remove from Playlist" : "Add to Playlist",
+                       systemImage: albumStore.isInPlaylist(album: album) ? "heart.fill" : "heart") {
+                    alertIsShowing.toggle()
+                }.buttonStyle(.borderedProminent)
+
             }
             Spacer()
 
         }.padding()
+            .alert(albumStore.isInPlaylist(album: album) ?
+                   "Do you want to remove \(album.collectionName) from your playlist?" :
+                   "Do you want to add \(album.collectionName) to your playlist?",
+                   isPresented: $alertIsShowing) {
+
+                Button("Cancel", role: .cancel) {
+                    //do nothing - the alert is dismissed
+                }
+
+                if albumStore.isInPlaylist(album: album) {
+                    //red remove button - only shown when the album is in the playlist
+                    Button(role: .destructive) {
+                        albumStore.removeFromPlaylist(album: album)
+                    } label: {
+                        Text("Remove")
+                    }
+                } else {
+                    //add button - only shown when the album is not in the playlist
+                    Button("Add") {
+                        albumStore.addToPlaylist(album: album)
+                    }
+                }
+            }
+
     }
 }
 
